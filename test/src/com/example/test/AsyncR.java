@@ -1,4 +1,4 @@
-package com.example.test;
+package messagesend.seita.com.messagesend;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
