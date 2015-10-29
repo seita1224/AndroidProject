@@ -1,0 +1,180 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(128,128,128); }
+.s3 { color: rgb(106,135,89); }
+.s4 { color: rgb(104,151,187); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">ie3a11.ecc.ac.jp.webview05</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.FloatingActionButton</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.Snackbar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.Menu</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.MenuItem</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.webkit.WebSettings</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.webkit.WebView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.webkit.WebViewClient</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    </span><span class="s2">//表示しているWebView</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">WebView mWedView</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s2">//画面回転数に応じて表示サイトを切り替えるための数値</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">i</span><span class="s0">;</span><span class="s1"> 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_main)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s2">//WebViewのインスタンス取得</span><span class="s1"> 
+        mWedView = (WebView)findViewById(R.id.webView)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s2">//WebSettingsオブジェクトを取得</span><span class="s1"> 
+        WebSettings settings = mWedView.getSettings()</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s2">//JaveScriptを有効にする</span><span class="s1"> 
+        settings.setJavaScriptEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s2">//WebViewのリンクをクリックするたびにIntentが発行される処理を無効にする</span><span class="s1"> 
+        mWedView.setWebViewClient(</span><span class="s0">new </span><span class="s1">WebViewClient())</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">//        //Activity起動時に初期URL(Yahooサイト)を読み込む</span><span class="s1"> 
+</span><span class="s2">//        if(savedInstanceState == null){</span><span class="s1"> 
+</span><span class="s2">//            mWedView.loadUrl(&quot;http://www.yahoo.co.jp/&quot;);</span><span class="s1"> 
+</span><span class="s2">//        }else{</span><span class="s1"> 
+</span><span class="s2">//            //WebViewの状態を復元</span><span class="s1"> 
+</span><span class="s2">//            mWedView.restoreState(savedInstanceState);</span><span class="s1"> 
+</span><span class="s2">//        }</span><span class="s1"> 
+ 
+    } 
+ 
+ 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onBackPressed() { 
+        </span><span class="s2">//履歴があれば、Backキーで前のページへ戻る</span><span class="s1"> 
+        </span><span class="s0">if</span><span class="s1">(mWedView.canGoBack()){ 
+            mWedView.goBack()</span><span class="s0">;</span><span class="s1"> 
+        }</span><span class="s0">else</span><span class="s1">{ 
+            </span><span class="s0">super</span><span class="s1">.onBackPressed()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        Toast.makeText(</span><span class="s0">this,</span><span class="s3">&quot;「onBackPressed」が呼ばれました&quot;</span><span class="s0">,</span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onSaveInstanceState(Bundle outState) { 
+        </span><span class="s2">//WebViewの状態を保存する(画面開店前の状態を保存する処理)</span><span class="s1"> 
+        mWedView.saveState(outState)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s2">//サイト変更のための変数保存</span><span class="s1"> 
+        outState.putInt(</span><span class="s3">&quot;サイト変更値&quot;</span><span class="s0">, </span><span class="s1">i)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">super</span><span class="s1">.onSaveInstanceState(outState)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onPause() { 
+        </span><span class="s0">super</span><span class="s1">.onPause()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s2">//WebViewで実行中の処理を停止</span><span class="s1"> 
+        mWedView.onPause()</span><span class="s0">;</span><span class="s1"> 
+ 
+        Toast.makeText(</span><span class="s0">this,</span><span class="s3">&quot;「onPause」が呼ばれました&quot;</span><span class="s0">,</span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onRestoreInstanceState(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onRestoreInstanceState(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        i = savedInstanceState.getInt(</span><span class="s3">&quot;サイト変更値&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onResume() { 
+        </span><span class="s2">//WebViewの処理を再び開始</span><span class="s1"> 
+        mWedView.onResume()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">super</span><span class="s1">.onResume()</span><span class="s0">;</span><span class="s1"> 
+ 
+        i = i % </span><span class="s4">3</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s2">//画面が切り替わるごとに表示サイトを変える</span><span class="s1"> 
+        </span><span class="s0">switch </span><span class="s1">(i){ 
+            </span><span class="s0">case </span><span class="s4">0 </span><span class="s1">: 
+                mWedView.loadUrl(</span><span class="s3">&quot;https://www.google.co.jp/&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">break;</span><span class="s1"> 
+ 
+            </span><span class="s0">case </span><span class="s4">1 </span><span class="s1">: 
+                mWedView.loadUrl(</span><span class="s3">&quot;http://www.yahoo.co.jp/&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">break;</span><span class="s1"> 
+ 
+            </span><span class="s0">case </span><span class="s4">2 </span><span class="s1">: 
+                mWedView.loadUrl(</span><span class="s3">&quot;http://www.goo.ne.jp/&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">break;</span><span class="s1"> 
+        } 
+        i++</span><span class="s0">;</span><span class="s1"> 
+ 
+        Toast.makeText(</span><span class="s0">this,</span><span class="s3">&quot;「onResume」が呼ばれました&quot;</span><span class="s0">,</span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onDestroy() { 
+        </span><span class="s0">if</span><span class="s1">(mWedView != </span><span class="s0">null</span><span class="s1">){ 
+            mWedView.stopLoading()</span><span class="s0">;</span><span class="s1"> 
+            mWedView.setWebChromeClient(</span><span class="s0">null</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            mWedView.setWebViewClient(</span><span class="s0">null</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            mWedView.destroy()</span><span class="s0">;</span><span class="s1"> 
+            mWedView = </span><span class="s0">null;</span><span class="s1"> 
+        } 
+ 
+        Toast.makeText(</span><span class="s0">this,</span><span class="s3">&quot;「onDestroy」が呼ばれました&quot;</span><span class="s0">,</span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">super</span><span class="s1">.onDestroy()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onCreateOptionsMenu(Menu menu) { 
+        </span><span class="s2">// Inflate the menu; this adds items to the action bar if it is present.</span><span class="s1"> 
+        getMenuInflater().inflate(R.menu.menu_main</span><span class="s0">, </span><span class="s1">menu)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">return true;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onOptionsItemSelected(MenuItem item) { 
+        </span><span class="s2">// Handle action bar item clicks here. The action bar will</span><span class="s1"> 
+        </span><span class="s2">// automatically handle clicks on the Home/Up button, so long</span><span class="s1"> 
+        </span><span class="s2">// as you specify a parent activity in AndroidManifest.xml.</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">id = item.getItemId()</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s2">//noinspection SimplifiableIfStatement</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(id == R.id.action_settings) { 
+            </span><span class="s0">return true;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">return super</span><span class="s1">.onOptionsItemSelected(item)</span><span class="s0">;</span><span class="s1"> 
+    } 
+} 
+</span></pre>
+</body>
+</html>
