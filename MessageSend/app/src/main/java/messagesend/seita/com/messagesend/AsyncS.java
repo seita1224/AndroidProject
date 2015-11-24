@@ -4,7 +4,10 @@ package messagesend.seita.com.messagesend;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.DatagramSocketImpl;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
@@ -37,21 +40,27 @@ public class AsyncS extends AsyncTask<Void,Void,Void>{
 
     /*
      * Port番号格納用
-     * String
      */
     int port;
 
     /*
+    Ipアドレス変換用String型変数:ips
+    送信テキスト:sends
+     */
+    String ips,sends;
+
+
+    /*
      * DatagramSocket so:データグラムソケット
      */
-    DatagramSocket so;
+    private DatagramSocket so;
 
     /*
      * DatagramPacket pa:データグラムパケット
      */
     DatagramPacket pa;
 
-	/*
+    /*
 	 * --------------------------------------
 	 */
 
@@ -60,24 +69,29 @@ public class AsyncS extends AsyncTask<Void,Void,Void>{
      * IPアドレスの格納、ポート番号の格納、送信用ソケットの生成まで行う
      * 引数:ipアドレス入力用EditText,Port番号入力用,メッセージ表示用TextView
      */
-    public AsyncS(EditText ipe,EditText pre,TextView v) {
+    public AsyncS(EditText ipe,EditText pre,EditText sends,TextView v) {
 
         Log.d("log","AsyncSコンストラクタ");
 
         this.ipe = ipe;
         this.pre = pre;
+        this.sends = sends.getText().toString();
         this.v = v;
 
+        //IPアドレス変換用byte配列準備
+        ips = this.ipe.getText().toString();
 
         try {
 
             //ipアドレスとポート番号の取得
-            ip = InetAddress.getByName(ipe.getText().toString());
+            ip = InetAddress.getByName(ips);
             port = Integer.parseInt(pre.getText().toString());
 
+
+            //---確認用Log---
             byte testbyte[] = ip.getAddress();
             Log.d("debug","byte = " + testbyte + "InetAddress = " + ip.toString());
-
+            //--------------
 
         } catch (UnknownHostException e) {
 
@@ -88,7 +102,9 @@ public class AsyncS extends AsyncTask<Void,Void,Void>{
         Log.d("log","送信ソケット生成開始");
         try {
 
-            so = new DatagramSocket(port,ip);
+
+
+            so = new DatagramSocket();
             Log.i("info","info = データグラムソケット生成:ポート番号(" + so.getPort() + ")");
 
         } catch (SocketException e1) {
@@ -113,19 +129,26 @@ public class AsyncS extends AsyncTask<Void,Void,Void>{
 
         Log.d("log","送信パケット生成開始");
 
+        //ソケットにポートをバインド
+        so.connect(ip,port);
+
         //データバッファとUDPパケットの作成
-        byte receviBf[] = new byte[1024];
+        byte receviBf[] = new byte[2048];
+        receviBf = sends.getBytes();
         pa = new DatagramPacket(receviBf,receviBf.length);
 
         Log.d("log","送信パケット生成完了");
 
         //受信開始
-        Log.d("log", "メッセージ受信");
+        Log.d("log", "メッセージ送信開始");
 
         //データの送信
         try {
 
             so.send(pa);
+
+            //送信メッセージ表示
+            publishProgress();
 
         } catch (IOException e) {
 
@@ -147,8 +170,9 @@ public class AsyncS extends AsyncTask<Void,Void,Void>{
     @Override
     protected void onProgressUpdate(Void... values) {
 
+        Log.d("log", "文字表示準備完了");
 
-
+        v.setText( v.getText() + "Send : " + sends + "\n");
     }
 
 

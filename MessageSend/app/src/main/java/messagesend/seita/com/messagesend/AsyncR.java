@@ -116,7 +116,7 @@ public class AsyncR extends AsyncTask<Void, Void, String> {
 
         Log.d("log","文字表示準備完了");
 
-        v.setText(v.getText() + jmoji + "\n");
+        v.setText(v.getText() + "Receive : " + jmoji + "\n");
 
         jmoji = "";
 

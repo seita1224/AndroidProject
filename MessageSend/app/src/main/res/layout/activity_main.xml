@@ -52,10 +52,9 @@
             android:layout_gravity="left|top"
             android:layout_row="0"
             android:ems="10"
-            android:inputType="number|date" >
+            android:inputType="number|textEmailAddress" />
 
-            <requestFocus />
-        </EditText>
+
 
         <EditText
             android:id="@+id/Port"

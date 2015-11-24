@@ -53,7 +53,7 @@ public class MainActivity extends Activity implements  OnCheckedChangeListener, 
         if(isChecked == true){
 
             //���M����
-            syncs = new AsyncS((EditText)findViewById(R.id.Ip),(EditText)findViewById(R.id.Port), (TextView)findViewById(R.id.textView3));
+            syncs = new AsyncS((EditText)findViewById(R.id.Ip),(EditText)findViewById(R.id.Port), (EditText)findViewById(R.id.editText3),(TextView)findViewById(R.id.textView3));
         }
 
     }
